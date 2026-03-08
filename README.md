@@ -46,30 +46,6 @@ Then use `hope::soa::wrapper<particle_slice>` to:
 - CMake 3.16+
 - No third-party runtime dependencies
 
-## Build
-
-```bash
-cmake -S . -B build
-cmake --build build
-```
-
-## Tests
-
-The tests use standard C++ `assert` (no GoogleTest):
-
-```bash
-cmake --build build --target tests
-./build/tests/tests
-```
-
-Current test coverage includes:
-
-- `add_get_slice`
-- `get` and `operator[]`
-- `reserve`, `resize`, `clear`
-- iterator behavior
-- `wrapper_with_handle` add/get/erase/iteration
-
 ## Examples
 
 ### Define slice and storage
