@@ -1,5 +1,4 @@
 #include <iostream>
-#include <bits/ios_base.h>
 
 #include "soa_wrapper.h"
 
@@ -104,6 +103,49 @@ void iterator() {
     }
 }
 
+void emplace_back_sample() {
+    struct instigator final {
+        int* x;
+        int* y;
+        float* f;
+    };
+
+    hope::soa::wrapper<instigator> wrapper;
+    wrapper.reserve(10);
+
+    // Basic: lambda that sets fields on the new slice
+    wrapper.emplace_back([](auto slice) {
+        *slice.x = 1;
+        *slice.y = 10;
+        *slice.f = 1.5f;
+    });
+
+    // With extra args passed through to the lambda
+    int x_val = 42;
+    wrapper.emplace_back([](auto slice, int x) {
+        *slice.x = x;
+        *slice.y = x * 2;
+        *slice.f = static_cast<float>(x) / 10.0f;
+    }, x_val);
+
+    // Same effect using add_get_slice (more verbose)
+    {
+        auto slice = wrapper.add_get_slice();
+        *slice.x = 99;
+        *slice.y = 199;
+        *slice.f = 9.9f;
+    }
+
+    std::cout << "emplace_back sample\n";
+    for (auto i = 0u; i < wrapper.size; ++i) {
+        auto s = wrapper.get(i);
+        std::cout
+            << '[' << *s.x << "]"
+            << '[' << *s.y << "]"
+            << '[' << *s.f << "]\n";
+    }
+}
+
 void wrapper_with_handle() {
     struct instigator final {
         int* x;
@@ -140,6 +182,7 @@ void wrapper_with_handle() {
 int main() {
     compute_dist_sample();
     pushing_data();
+    emplace_back_sample();
     iterator();
     wrapper_with_handle();
 }

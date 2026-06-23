@@ -34,6 +34,7 @@ namespace hope::soa {
             });
             return res;
         }
+
         // NOTE:: const correctness is not we need here
         TSlice get(std::size_t index) const {
             TSlice res{};
@@ -62,6 +63,12 @@ namespace hope::soa {
                 array.resize(count);
             });
             size = count;
+        }
+
+        template<typename TFunction, typename... Ts>
+        void emplace_back(TFunction&& f, Ts&&... args) {
+            resize(size + 1);
+            f(get(size - 1), std::forward<Ts>(args)...);
         }
 
         TSlice operator[](std::size_t index) {

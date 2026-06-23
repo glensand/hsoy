@@ -6,6 +6,10 @@
  * this file. If not, please write to: bezborodoff.gleb@gmail.com, or visit : https://github.com/glensand/hsoy
  */
 
+#include <cstddef>
+#include <tuple>
+#include <functional>
+
 namespace hope::soa::gen {
     template<std::size_t N>
     struct Int {};
